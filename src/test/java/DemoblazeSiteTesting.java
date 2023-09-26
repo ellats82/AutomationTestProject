@@ -36,12 +36,32 @@ public class DemoblazeSiteTesting {
     }
 
     @Test()
-    public void Test01() {
+    public void Test01Phones() {
         WebElement contcont = driver.findElement(By.xpath("//*[@id='contcont']"));
         WebElement Phones = contcont.findElement(By.xpath("//*[text()='Phones']"));
-       // System.out.println("Phones :" + "" + phones);
+       // System.out.println("Phones :" + "" + Phones);
+        Phones.click();
          assertTrue(Phones.isDisplayed());
     }
+
+    @Test()
+    public void Test01Laptops() {
+        WebElement contcont = driver.findElement(By.xpath("//*[@id='contcont']"));
+        WebElement Laptops = contcont.findElement(By.xpath("//*[text()='Laptops']"));
+        // System.out.println("Laptops :" + "" + Laptops);
+        Laptops.click();
+        assertTrue(Laptops.isDisplayed());
+    }
+
+    @Test()
+    public void Test01Monitors() {
+        WebElement contcont = driver.findElement(By.xpath("//*[@id='contcont']"));
+        WebElement Monitors = contcont.findElement(By.xpath("//*[text()='Monitors']"));
+        // System.out.println("Monitors :" + "" + Monitors);
+        Monitors.click();
+        assertTrue(Monitors.isDisplayed());
+    }
+
     @AfterClass
     public void closeSession() {
         //CloseBrowserTest10
