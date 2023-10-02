@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ENVIRONMENT>
+    <URL>https://www.demoblaze.com/cart.html</URL>
+    <Data>
+        <item>
+            <Name>Rina</Name>
+            <Country>Israel</Country>
+            <City>Ramla</City>
+            <Credit_card>1234123412341234</Credit_card>
+            <Month>9</Month>
+            <Year>2024</Year>
+        </item>
+        <item>
+            <Name>Anna</Name>
+            <Country>Israel</Country>
+            <City>Tel Aviv</City>
+            <Credit_card>1234888812349999</Credit_card>
+            <Month>5</Month>
+            <Year>2024</Year>
+        </item>
+        <item>
+            <Name>Sima</Name>
+            <Country>Israel</Country>
+            <City>Beer Sheva</City>
+            <Credit_card>1234123000041234</Credit_card>
+            <Month>1</Month>
+            <Year>2024</Year>
+        </item>
+    </Data>
+    <EXPECTED_Success>Thank you for your purchase!</EXPECTED_Success>
+</ENVIRONMENT>
