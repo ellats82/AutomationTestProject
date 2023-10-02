@@ -44,7 +44,7 @@ public class DemoblazeSiteTesting {
     }
 
     @Test(description = "Click On Phones")
-    @Description("Click On Phones From List At Home Page")
+    @Description("Click On Phones From Categories List On Home Page")
     public void Test01Phones() {
         WebElement Phones = demoblazeObject.getPhones();
         System.out.println("Phones :" + "" + Phones.getText());
@@ -55,7 +55,7 @@ public class DemoblazeSiteTesting {
     }
 
     @Test(description = "Click On Laptops")
-    @Description("Click On Laptops From List At Home Page")
+    @Description("Click On Laptops From Categories List On Home Page")
     public void Test01Laptops() {
         WebElement Laptops = demoblazeObject.getLaptops();
         System.out.println("Laptops :" + "" + Laptops.getText());
@@ -66,7 +66,7 @@ public class DemoblazeSiteTesting {
     }
 
     @Test(description = "Click On Monitors")
-    @Description("Click On Monitors From List At Home Page")
+    @Description("Click On Monitors From Categories List On Home Page")
     public void Test01Monitors() {
         WebElement Monitors = demoblazeObject.getMonitors();
         System.out.println("Monitors :" + "" + Monitors.getText());
@@ -76,8 +76,8 @@ public class DemoblazeSiteTesting {
         assertTrue(demoblazeObject.checkIfProductArrExist(names));
     }
 
-    @Test(description = "Click On Home")
-    @Description("Click On Home From Hadar At Home Page")
+    @Test(description = "Click On Home Link")
+    @Description("Click On Home Link From Header On Home Page")
     public void Test02Home() {
         WebElement homeLink = demoblazeObject.getHomeLink();
         homeLink.click();
@@ -89,8 +89,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(title.contains("PRODUCT STORE"));
     }
 
-    @Test(description = "Click On Contact")
-    @Description("Click On Contact From Hadar At Home Page")
+    @Test(description = "Click On Contact Link")
+    @Description("Click On Contact Link From Header ON Home Page")
     public void Test02Contact() {
         WebElement contactLink = demoblazeObject.getContactLink();
         contactLink.click();
@@ -102,8 +102,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(modalTitle.isDisplayed());
     }
 
-    @Test(description = "Click On About Us")
-    @Description("Click On About Us From Hadar At Home Page")
+    @Test(description = "Click On About Us Link")
+    @Description("Click On About Us Link From Header On Home Page")
     public void Test02AboutUs() {
         WebElement aboutUstLink = demoblazeObject.getAboutUstLink();
         aboutUstLink.click();
@@ -115,8 +115,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(modalTitle.isDisplayed());
     }
 
-    @Test(description = "Click On Cart")
-    @Description("Click On Cart From Hadar At Home Page")
+    @Test(description = "Click On Cart Link")
+    @Description("Click On Cart Link From Header On Home Page")
     public void Test02Cart() {
         WebElement cartLink = demoblazeObject.getCartLink();
         System.out.println("linkText: " + cartLink.getText());
@@ -131,8 +131,8 @@ public class DemoblazeSiteTesting {
         Assert.assertEquals(cartPageTitle.getText(),"Products");
     }
 
-    @Test(description = "Click On Log In")
-    @Description("Click On Log In From Hadar At Home Page")
+    @Test(description = "Click On Log In Link")
+    @Description("Click On Log In Link From Header On Home Page")
     public void Test02LogIn() {
         WebElement logInLink = demoblazeObject.getLogInLink();
         logInLink.click();
@@ -144,8 +144,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(logInModalTitle.isDisplayed());
     }
 
-    @Test(description = "Click On Sign Up")
-    @Description("Click On Sign Up From Hadar At Home Page")
+    @Test(description = "Click On Sign Up Link")
+    @Description("Click On Sign Up Link From Header On Home Page")
     public void Test02SignUp() {
         WebElement signUpLink = demoblazeObject.getSignUpLink();
         signUpLink.click();
@@ -157,8 +157,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(signUpModalTitle.isDisplayed());
     }
 
-    @Test(description = "Verify Contact Fields")
-    @Description("Verify Contact Fields: Email , Name , Message")
+    @Test(description = "Verify Existence Of Contact Fields")
+    @Description("Verify Existence Of Contact Fields: Email , Name , Message")
     public void Test03ContactFields() {
         WebElement contactLink = demoblazeObject.getContactLink();
         contactLink.click();
@@ -173,7 +173,7 @@ public class DemoblazeSiteTesting {
     }
 
     @Test(description = "Fill Up Contact Fields: Email , Name , Message")
-    @Description("Click On Contact Submit Button")
+    @Description("Verify Sent Message After Filling Contact Fields & Submitting Them ")
     public void Test03ContactSendMessage() {
         WebElement contactLink = demoblazeObject.getContactLink();
         contactLink.click();
@@ -198,7 +198,7 @@ public class DemoblazeSiteTesting {
     }
 
     @Test(description = "Chose Products And Place Order")
-    @Description("Chose Products , verify Products And Place Order")
+    @Description("Chose Products , verify them & Place Order")
     public void Test04ChoseProductsAndPlaceOrder() {
         demoblazeObject.clickOnMonitors();
 
