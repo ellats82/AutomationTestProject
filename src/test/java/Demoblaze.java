@@ -66,6 +66,9 @@ public class Demoblaze {
     @FindBy(xpath = "//*[@id=\"tbodyid\"]/div[1]/div/div/h4/a")
     private WebElement appleMonitorSelectLink;
 
+    @FindBy(xpath = "//*[@id=\"tbodyid\"]/div[2]/div/div/h4/a")
+    private WebElement asusMonitorSelectLink;
+
     @FindBy(xpath = "//*[@id=\"tbodyid\"]/div[2]/div/a")
     private WebElement addToCartButton;
 
@@ -89,14 +92,23 @@ public class Demoblaze {
 
     public boolean checkIfProductArrExist (String[] productNames){
         boolean isFound = false;
-        for (int i=0; i<productNames.length; i++){
-            WebElement element = this.tbodyid.findElement(By.xpath("//*[text()='"+productNames[i]+"']"));
-            isFound = element.isDisplayed();
-            System.out.println(productNames[i] + " is found " + isFound);
-            if(!isFound){
+
+        for (int i = 0; i < productNames.length; i++) {
+            try {
+                WebElement element = this.tbodyid.findElement(By.xpath("//*[text()='" + productNames[i] + "']"));
+                isFound = element.isDisplayed();
+                System.out.println(productNames[i] + " is found ? [" + isFound + "]");
+                if (!isFound) {
+                    break;
+                }
+            }catch (Exception e){
+                System.out.println("Exception at checkIfProductArrExist, " +
+                                   "while trying to find productNames[i] Exception=>"+e.getMessage());
+                isFound = false;
                 break;
             }
         }
+
         return isFound;
     }
 
@@ -167,6 +179,10 @@ public class Demoblaze {
 
     public void clickOnAppleMonitorSelectLink() {
         this.appleMonitorSelectLink.click();
+    }
+
+    public void clickOnAsusMonitorSelectLink() {
+        this.asusMonitorSelectLink.click();
     }
 
     public void clickOnAddToCartButton() {

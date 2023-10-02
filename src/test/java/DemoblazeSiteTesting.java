@@ -1,5 +1,6 @@
 import com.google.common.util.concurrent.Uninterruptibles;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Description;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -13,6 +14,8 @@ import org.w3c.dom.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import static org.testng.Assert.assertEquals;
@@ -25,6 +28,7 @@ public class DemoblazeSiteTesting {
     String pageUrl = "https://www.demoblaze.com/";
 
     Demoblaze demoblazeObject;
+    DemoblazeCart demoblazeCartObject;
 
 
     @BeforeClass
@@ -36,9 +40,11 @@ public class DemoblazeSiteTesting {
         driver.navigate().to(pageUrl);
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         demoblazeObject = PageFactory.initElements(driver, Demoblaze.class);
+        demoblazeCartObject = PageFactory.initElements(driver, DemoblazeCart.class);
     }
 
-    @Test()
+    @Test(description = "Click On Phones")
+    @Description("Click On Phones From List At Home Page")
     public void Test01Phones() {
         WebElement Phones = demoblazeObject.getPhones();
         System.out.println("Phones :" + "" + Phones.getText());
@@ -48,7 +54,8 @@ public class DemoblazeSiteTesting {
         assertTrue(demoblazeObject.checkIfProductArrExist(names));
     }
 
-    @Test()
+    @Test(description = "Click On Laptops")
+    @Description("Click On Laptops From List At Home Page")
     public void Test01Laptops() {
         WebElement Laptops = demoblazeObject.getLaptops();
         System.out.println("Laptops :" + "" + Laptops.getText());
@@ -58,7 +65,8 @@ public class DemoblazeSiteTesting {
         assertTrue(demoblazeObject.checkIfProductArrExist(names));
     }
 
-    @Test()
+    @Test(description = "Click On Monitors")
+    @Description("Click On Monitors From List At Home Page")
     public void Test01Monitors() {
         WebElement Monitors = demoblazeObject.getMonitors();
         System.out.println("Monitors :" + "" + Monitors.getText());
@@ -68,7 +76,8 @@ public class DemoblazeSiteTesting {
         assertTrue(demoblazeObject.checkIfProductArrExist(names));
     }
 
-    @Test()
+    @Test(description = "Click On Home")
+    @Description("Click On Home From Hadar At Home Page")
     public void Test02Home() {
         WebElement homeLink = demoblazeObject.getHomeLink();
         homeLink.click();
@@ -80,7 +89,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(title.contains("PRODUCT STORE"));
     }
 
-    @Test()
+    @Test(description = "Click On Contact")
+    @Description("Click On Contact From Hadar At Home Page")
     public void Test02Contact() {
         WebElement contactLink = demoblazeObject.getContactLink();
         contactLink.click();
@@ -92,7 +102,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(modalTitle.isDisplayed());
     }
 
-    @Test()
+    @Test(description = "Click On About Us")
+    @Description("Click On About Us From Hadar At Home Page")
     public void Test02AboutUs() {
         WebElement aboutUstLink = demoblazeObject.getAboutUstLink();
         aboutUstLink.click();
@@ -104,7 +115,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(modalTitle.isDisplayed());
     }
 
-    @Test()
+    @Test(description = "Click On Cart")
+    @Description("Click On Cart From Hadar At Home Page")
     public void Test02Cart() {
         WebElement cartLink = demoblazeObject.getCartLink();
         System.out.println("linkText: " + cartLink.getText());
@@ -119,7 +131,8 @@ public class DemoblazeSiteTesting {
         Assert.assertEquals(cartPageTitle.getText(),"Products");
     }
 
-    @Test()
+    @Test(description = "Click On Log In")
+    @Description("Click On Log In From Hadar At Home Page")
     public void Test02LogIn() {
         WebElement logInLink = demoblazeObject.getLogInLink();
         logInLink.click();
@@ -131,7 +144,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(logInModalTitle.isDisplayed());
     }
 
-    @Test()
+    @Test(description = "Click On Sign Up")
+    @Description("Click On Sign Up From Hadar At Home Page")
     public void Test02SignUp() {
         WebElement signUpLink = demoblazeObject.getSignUpLink();
         signUpLink.click();
@@ -143,7 +157,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(signUpModalTitle.isDisplayed());
     }
 
-    @Test()
+    @Test(description = "Verify Contact Fields")
+    @Description("Verify Contact Fields: Email , Name , Message")
     public void Test03ContactFields() {
         WebElement contactLink = demoblazeObject.getContactLink();
         contactLink.click();
@@ -157,7 +172,8 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(emailInput.isDisplayed() && nameInput.isDisplayed() && messageText.isDisplayed() );
     }
 
-    @Test()
+    @Test(description = "Fill Up Contact Fields: Email , Name , Message")
+    @Description("Click On Contact Submit Button")
     public void Test03ContactSendMessage() {
         WebElement contactLink = demoblazeObject.getContactLink();
         contactLink.click();
@@ -181,48 +197,90 @@ public class DemoblazeSiteTesting {
 
     }
 
-    @Test()
-    public void Test04ChoseProducts() {
+    @Test(description = "Chose Products And Place Order")
+    @Description("Chose Products , verify Products And Place Order")
+    public void Test04ChoseProductsAndPlaceOrder() {
         demoblazeObject.clickOnMonitors();
 
-        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        waitTilDataLoad(3);
 
         demoblazeObject.clickOnAppleMonitorSelectLink();
 
-        Uninterruptibles.sleepUninterruptibly(5, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        waitTilDataLoad(5);
 
         demoblazeObject.clickOnAddToCartButton();
 
-        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-
+        waitTilDataLoad(3);
         Alert alert = driver.switchTo().alert();
         System.out.println("Alert text is: " + alert.getText());
 
         Assert.assertEquals(alert.getText(),"Product added");
-        Uninterruptibles.sleepUninterruptibly(4, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+        waitTilDataLoad(4);
         alert.accept();
 
-        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        waitTilDataLoad(3);
 
         WebElement homeLink = demoblazeObject.getHomeLink();
         System.out.println("linkText: " + homeLink.getText());
         homeLink.click();
-        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        waitTilDataLoad(3);
 
         demoblazeObject.clickOnMonitors();
-        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        demoblazeObject.clickOnAppleMonitorSelectLink();
+        waitTilDataLoad(3);
+        demoblazeObject.clickOnAsusMonitorSelectLink();
 
-//        wait till page loaded
-        Uninterruptibles.sleepUninterruptibly(5, TimeUnit.SECONDS);
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        waitTilDataLoad(5);
+
+        demoblazeObject.clickOnAddToCartButton();
+
+        waitTilDataLoad(3);
+
+        Alert alert2 = driver.switchTo().alert();
+        System.out.println("Alert2 text is: " + alert2.getText());
+
+        Assert.assertEquals(alert2.getText(),"Product added");
+        waitTilDataLoad(4);
+        alert2.accept();
+
+        waitTilDataLoad(3);
+
+        WebElement cartLink = demoblazeObject.getCartLink();
+        cartLink.click();
+
+        waitTilDataLoad(3);
+
+        WebElement asusMonitor = demoblazeCartObject.getAsusMonitor();
+        WebElement appleMonitor = demoblazeCartObject.getAppleMonitor();
+
+        assertTrue(asusMonitor.isDisplayed() && appleMonitor.isDisplayed());
+
+        ArrayList<HashMap<String, String>> cartSiteDataMapArray = demoblazeCartObject.getDataMap();
+        int ind = demoblazeCartObject.getRandomNumberUsingNextInt(0, cartSiteDataMapArray.size());
+        System.out.println("INDEX: " + ind);
+
+        String Name=cartSiteDataMapArray.get(ind).get("Name");
+        String Country=cartSiteDataMapArray.get(ind).get("Country");
+        String City=cartSiteDataMapArray.get(ind).get("City");
+        String Credit_card=cartSiteDataMapArray.get(ind).get("Credit_card");
+        String Month=cartSiteDataMapArray.get(ind).get("Month");
+        String Year=cartSiteDataMapArray.get(ind).get("Year");
+
+        demoblazeCartObject.clickOnPlaceOrder();
+        demoblazeCartObject.getName().sendKeys(Name);
+        demoblazeCartObject.getCountry().sendKeys(Country);
+        demoblazeCartObject.getCity().sendKeys(City);
+        demoblazeCartObject.getCredit_card().sendKeys(Credit_card);
+        demoblazeCartObject.getMont().sendKeys(Month);
+        demoblazeCartObject.getYear().sendKeys(Year);
+        demoblazeCartObject.clickConfirmOrder();
+
+        Assert.assertEquals(demoblazeCartObject.getSuccessTitle(),demoblazeCartObject.getExpectedPopUpTitle());
+
+    }
+
+    private void waitTilDataLoad(int seconds){
+        Uninterruptibles.sleepUninterruptibly(seconds, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
 
         @AfterClass
