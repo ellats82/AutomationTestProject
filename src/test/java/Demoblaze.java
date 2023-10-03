@@ -27,11 +27,17 @@ public class Demoblaze {
     @FindBy(xpath = "//*[@id=\"exampleModalLabel\"]")
     private WebElement contactModalTitle;
 
+    @FindBy(xpath = "//*[@id=\"exampleModal\"]/div/div/div[3]/button[1]")
+    private WebElement contactCloseButton;
+
     @FindBy(xpath = "//*[@id='navbarExample']/ul/li[3]/a")
     private WebElement aboutUstLink;
 
     @FindBy(xpath = "//*[@id='videoModalLabel']")
     private WebElement aboutModalTitle;
+
+    @FindBy(xpath = "//*[@id=\"videoModal\"]/div/div/div[3]/button")
+    private WebElement aboutUsCloseButton;
 
     @FindBy(xpath = "//*[@id=\"cartur\"]")
     private WebElement cartLink;
@@ -45,11 +51,17 @@ public class Demoblaze {
     @FindBy(id = "logInModalLabel")
     private WebElement logInModalTitle;
 
+    @FindBy(xpath = "//*[@id=\"logInModal\"]/div/div/div[3]/button[1]")
+    private WebElement logInCloseButton;
+
     @FindBy(id = "signin2")
     private WebElement signUpLink;
 
     @FindBy(id = "signInModalLabel")
     private WebElement signUpModalTitle;
+
+    @FindBy(xpath = "//*[@id=\"signInModal\"]/div/div/div[3]/button[1]")
+    private WebElement signUpCloseButton;
 
     @FindBy(id = "recipient-email")
     private WebElement emailInput;
@@ -128,6 +140,10 @@ public class Demoblaze {
         return this.contactModalTitle;
     }
 
+    public void clickOnContactCloseButton() {
+        this.contactCloseButton.click();
+    }
+
     public WebElement getAboutUstLink() {
         return this.aboutUstLink;
     }
@@ -135,6 +151,11 @@ public class Demoblaze {
     public WebElement getAboutModalTitle() {
         return this.aboutModalTitle;
     }
+
+    public void clickOnAboutUsCloseButton() {
+        this.aboutUsCloseButton.click();
+    }
+
 
     public WebElement getCartLink() {
         return this.cartLink;
@@ -152,12 +173,19 @@ public class Demoblaze {
         return this.logInModalTitle;
     }
 
+    public void clickOnLogInCloseButton() {
+        this.logInCloseButton.click();
+    }
     public WebElement getSignUpLink() {
         return this.signUpLink;
     }
 
     public WebElement getSignUpModalTitle() {
         return this.signUpModalTitle;
+    }
+
+    public void clickOnSignUpCloseButton() {
+        this.signUpCloseButton.click();
     }
 
     public WebElement getEmailInput() {

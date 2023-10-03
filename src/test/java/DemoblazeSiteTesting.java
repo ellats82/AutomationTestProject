@@ -1,6 +1,7 @@
 import com.google.common.util.concurrent.Uninterruptibles;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -100,6 +101,7 @@ public class DemoblazeSiteTesting {
         WebElement modalTitle = demoblazeObject.getContactModalTitleElem();
         System.out.println("modalTitle: " + modalTitle.getText());
         Assert.assertTrue(modalTitle.isDisplayed());
+        demoblazeObject.clickOnContactCloseButton();
     }
 
     @Test(description = "Click On About Us Link")
@@ -113,6 +115,7 @@ public class DemoblazeSiteTesting {
         WebElement modalTitle =demoblazeObject.getAboutModalTitle();
         System.out.println("modalTitle: " + modalTitle.getText());
         Assert.assertTrue(modalTitle.isDisplayed());
+        demoblazeObject.clickOnAboutUsCloseButton();
     }
 
     @Test(description = "Click On Cart Link")
@@ -129,6 +132,9 @@ public class DemoblazeSiteTesting {
         System.out.println("PageTitle: " + cartPageTitle.getText());
 
         Assert.assertEquals(cartPageTitle.getText(),"Products");
+        WebElement homeLink = demoblazeObject.getHomeLink();
+        homeLink.click();
+
     }
 
     @Test(description = "Click On Log In Link")
@@ -142,6 +148,7 @@ public class DemoblazeSiteTesting {
         WebElement logInModalTitle = demoblazeObject.getLogInModalTitle();
         System.out.println("modalTitle: " + logInModalTitle.getText());
         Assert.assertTrue(logInModalTitle.isDisplayed());
+        demoblazeObject.clickOnLogInCloseButton();
     }
 
     @Test(description = "Click On Sign Up Link")
@@ -155,6 +162,7 @@ public class DemoblazeSiteTesting {
         WebElement signUpModalTitle = demoblazeObject.getSignUpModalTitle();
         System.out.println("modalTitle: " + signUpModalTitle.getText());
         Assert.assertTrue(signUpModalTitle.isDisplayed());
+        demoblazeObject.clickOnSignUpCloseButton();
     }
 
     @Test(description = "Verify Existence Of Contact Fields")
@@ -170,6 +178,7 @@ public class DemoblazeSiteTesting {
         WebElement messageText = demoblazeObject.getMessageText();
 
         Assert.assertTrue(emailInput.isDisplayed() && nameInput.isDisplayed() && messageText.isDisplayed() );
+        demoblazeObject.clickOnContactCloseButton();
     }
 
     @Test(description = "Fill Up Contact Fields: Email , Name , Message")
@@ -200,59 +209,16 @@ public class DemoblazeSiteTesting {
     @Test(description = "Chose Products And Place Order")
     @Description("Chose Products , verify them & Place Order")
     public void Test04ChoseProductsAndPlaceOrder() {
-        demoblazeObject.clickOnMonitors();
-
-        waitTilDataLoad(3);
-
-        demoblazeObject.clickOnAppleMonitorSelectLink();
-
-        waitTilDataLoad(5);
-
-        demoblazeObject.clickOnAddToCartButton();
-
-        waitTilDataLoad(3);
-        Alert alert = driver.switchTo().alert();
-        System.out.println("Alert text is: " + alert.getText());
-
-        Assert.assertEquals(alert.getText(),"Product added");
-        waitTilDataLoad(4);
-        alert.accept();
-
-        waitTilDataLoad(3);
+        choseAppleMonitor();
 
         WebElement homeLink = demoblazeObject.getHomeLink();
         System.out.println("linkText: " + homeLink.getText());
         homeLink.click();
         waitTilDataLoad(3);
 
-        demoblazeObject.clickOnMonitors();
-        waitTilDataLoad(3);
-        demoblazeObject.clickOnAsusMonitorSelectLink();
+        choseAsusMonitor();
 
-        waitTilDataLoad(5);
-
-        demoblazeObject.clickOnAddToCartButton();
-
-        waitTilDataLoad(3);
-
-        Alert alert2 = driver.switchTo().alert();
-        System.out.println("Alert2 text is: " + alert2.getText());
-
-        Assert.assertEquals(alert2.getText(),"Product added");
-        waitTilDataLoad(4);
-        alert2.accept();
-
-        waitTilDataLoad(3);
-
-        WebElement cartLink = demoblazeObject.getCartLink();
-        cartLink.click();
-
-        waitTilDataLoad(3);
-
-        WebElement asusMonitor = demoblazeCartObject.getAsusMonitor();
-        WebElement appleMonitor = demoblazeCartObject.getAppleMonitor();
-
-        assertTrue(asusMonitor.isDisplayed() && appleMonitor.isDisplayed());
+        verifyAppleAndAsusMonitorsPresentAtCart();
 
         ArrayList<HashMap<String, String>> cartSiteDataMapArray = demoblazeCartObject.getDataMap();
         int ind = demoblazeCartObject.getRandomNumberUsingNextInt(0, cartSiteDataMapArray.size());
@@ -275,6 +241,65 @@ public class DemoblazeSiteTesting {
         demoblazeCartObject.clickConfirmOrder();
 
         Assert.assertEquals(demoblazeCartObject.getSuccessTitle(),demoblazeCartObject.getExpectedPopUpTitle());
+
+    }
+
+    @Step ("Chose Apple Monitor")
+    public void choseAppleMonitor (){
+        demoblazeObject.clickOnMonitors();
+
+        waitTilDataLoad(3);
+
+        demoblazeObject.clickOnAppleMonitorSelectLink();
+
+        waitTilDataLoad(5);
+
+        demoblazeObject.clickOnAddToCartButton();
+
+        waitTilDataLoad(3);
+        Alert alert = driver.switchTo().alert();
+        System.out.println("Alert text is: " + alert.getText());
+
+        Assert.assertEquals(alert.getText(),"Product added");
+        waitTilDataLoad(4);
+        alert.accept();
+
+        waitTilDataLoad(3);
+    }
+
+    @Step ("Chose Asus Monitor")
+    public void choseAsusMonitor (){
+        demoblazeObject.clickOnMonitors();
+        waitTilDataLoad(3);
+        demoblazeObject.clickOnAsusMonitorSelectLink();
+
+        waitTilDataLoad(5);
+
+        demoblazeObject.clickOnAddToCartButton();
+
+        waitTilDataLoad(3);
+
+        Alert alert = driver.switchTo().alert();
+        System.out.println("Alert2 text is: " + alert.getText());
+
+        Assert.assertEquals(alert.getText(),"Product added");
+        waitTilDataLoad(4);
+        alert.accept();
+
+        waitTilDataLoad(3);
+    }
+
+    @Step ("Verify Apple & Asus Monitors Present At Cart")
+    public void verifyAppleAndAsusMonitorsPresentAtCart (){
+        WebElement cartLink = demoblazeObject.getCartLink();
+        cartLink.click();
+
+        waitTilDataLoad(3);
+
+        WebElement asusMonitor = demoblazeCartObject.getAsusMonitor();
+        WebElement appleMonitor = demoblazeCartObject.getAppleMonitor();
+
+        assertTrue(asusMonitor.isDisplayed() && appleMonitor.isDisplayed());
 
     }
 
