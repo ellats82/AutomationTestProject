@@ -47,6 +47,8 @@ public class DemoblazeCart {
     @FindBy(xpath = "//*[text()='Thank you for your purchase!']")
     private WebElement successTitle;
 
+    @FindBy(id="totalp")
+    private WebElement totalPrice;
 
 
 
@@ -96,6 +98,10 @@ public class DemoblazeCart {
 
     public String getSuccessTitle() {
         return successTitle.getText();
+    }
+
+    public WebElement getTotalPrice() {
+        return totalPrice;
     }
 
     public ArrayList<HashMap<String, String>> getDataMap()

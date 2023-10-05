@@ -44,7 +44,7 @@ public class DemoblazeSiteTesting {
         demoblazeCartObject = PageFactory.initElements(driver, DemoblazeCart.class);
     }
 
-    @Test(description = "Click On Phones")
+    @Test(description = "Test01 Click On Phones")
     @Description("Click On Phones From Categories List On Home Page")
     public void Test01Phones() {
         WebElement Phones = demoblazeObject.getPhones();
@@ -55,7 +55,7 @@ public class DemoblazeSiteTesting {
         assertTrue(demoblazeObject.checkIfProductArrExist(names));
     }
 
-    @Test(description = "Click On Laptops")
+    @Test(description = "Test02 Click On Laptops")
     @Description("Click On Laptops From Categories List On Home Page")
     public void Test01Laptops() {
         WebElement Laptops = demoblazeObject.getLaptops();
@@ -66,7 +66,7 @@ public class DemoblazeSiteTesting {
         assertTrue(demoblazeObject.checkIfProductArrExist(names));
     }
 
-    @Test(description = "Click On Monitors")
+    @Test(description = "Test03 Click On Monitors")
     @Description("Click On Monitors From Categories List On Home Page")
     public void Test01Monitors() {
         WebElement Monitors = demoblazeObject.getMonitors();
@@ -77,7 +77,7 @@ public class DemoblazeSiteTesting {
         assertTrue(demoblazeObject.checkIfProductArrExist(names));
     }
 
-    @Test(description = "Click On Home Link")
+    @Test(description = "Test04 Click On Home Link")
     @Description("Click On Home Link From Header On Home Page")
     public void Test02Home() {
         WebElement homeLink = demoblazeObject.getHomeLink();
@@ -90,7 +90,7 @@ public class DemoblazeSiteTesting {
         Assert.assertTrue(title.contains("PRODUCT STORE"));
     }
 
-    @Test(description = "Click On Contact Link")
+    @Test(description = "Test05 Click On Contact Link")
     @Description("Click On Contact Link From Header ON Home Page")
     public void Test02Contact() {
         WebElement contactLink = demoblazeObject.getContactLink();
@@ -104,7 +104,7 @@ public class DemoblazeSiteTesting {
         demoblazeObject.clickOnContactCloseButton();
     }
 
-    @Test(description = "Click On About Us Link")
+    @Test(description = "Test06 Click On About Us Link")
     @Description("Click On About Us Link From Header On Home Page")
     public void Test02AboutUs() {
         WebElement aboutUstLink = demoblazeObject.getAboutUstLink();
@@ -118,7 +118,7 @@ public class DemoblazeSiteTesting {
         demoblazeObject.clickOnAboutUsCloseButton();
     }
 
-    @Test(description = "Click On Cart Link")
+    @Test(description = "Test07 Click On Cart Link")
     @Description("Click On Cart Link From Header On Home Page")
     public void Test02Cart() {
         WebElement cartLink = demoblazeObject.getCartLink();
@@ -137,7 +137,7 @@ public class DemoblazeSiteTesting {
 
     }
 
-    @Test(description = "Click On Log In Link")
+    @Test(description = "Test08 Click On Log In Link")
     @Description("Click On Log In Link From Header On Home Page")
     public void Test02LogIn() {
         WebElement logInLink = demoblazeObject.getLogInLink();
@@ -151,7 +151,7 @@ public class DemoblazeSiteTesting {
         demoblazeObject.clickOnLogInCloseButton();
     }
 
-    @Test(description = "Click On Sign Up Link")
+    @Test(description = "Test09 Click On Sign Up Link")
     @Description("Click On Sign Up Link From Header On Home Page")
     public void Test02SignUp() {
         WebElement signUpLink = demoblazeObject.getSignUpLink();
@@ -165,7 +165,7 @@ public class DemoblazeSiteTesting {
         demoblazeObject.clickOnSignUpCloseButton();
     }
 
-    @Test(description = "Verify Existence Of Contact Fields")
+    @Test(description = "Test10 Verify Existence Of Contact Fields")
     @Description("Verify Existence Of Contact Fields: Email , Name , Message")
     public void Test03ContactFields() {
         WebElement contactLink = demoblazeObject.getContactLink();
@@ -181,7 +181,7 @@ public class DemoblazeSiteTesting {
         demoblazeObject.clickOnContactCloseButton();
     }
 
-    @Test(description = "Fill Up Contact Fields: Email , Name , Message")
+    @Test(description = "Test11 Fill Up Contact Fields: Email , Name , Message")
     @Description("Verify Sent Message After Filling Contact Fields & Submitting Them ")
     public void Test03ContactSendMessage() {
         WebElement contactLink = demoblazeObject.getContactLink();
@@ -200,25 +200,51 @@ public class DemoblazeSiteTesting {
         Alert alert = driver.switchTo().alert();
         System.out.println("Alert text is: " + alert.getText());
 
-        Assert.assertEquals(alert.getText(),"Thanks for the message!!");
+        String alertText =  alert.getText();
         Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
         alert.accept();
+        Assert.assertEquals(alertText,"Thanks for the message!!");
+
 
     }
 
-    @Test(description = "Chose Products And Place Order")
+    @Test(description = "Test12 (Bonus) Not Filling Up Contact Fields: Email , Name , Message")
+    @Description("Not Filling Up Contact Fields Click On Sent Message Button And Expect No Successes Alert ")
+    public void Test03ContactSendMessageWithEmptyFields() {
+        WebElement contactLink = demoblazeObject.getContactLink();
+        contactLink.click();
+        System.out.println("linkText: " + contactLink.getText());
+        Uninterruptibles.sleepUninterruptibly(2, TimeUnit.SECONDS);
+
+        demoblazeObject.clickOnContactSubmitButton();
+
+        Alert alert = driver.switchTo().alert();
+        System.out.println("Alert text is: " + alert.getText());
+        String alertText =  alert.getText();
+        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
+        alert.accept();
+
+        Assert.assertNotEquals(alertText,"Thanks for the message!!");
+    }
+
+    @Test(description = "Test13 (Included Bonus of calculated price) Chose Products And Place Order")
     @Description("Chose Products , verify them & Place Order")
     public void Test04ChoseProductsAndPlaceOrder() {
-        choseAppleMonitor();
+        long appleMonitorPrice = choseAppleMonitor();
 
         WebElement homeLink = demoblazeObject.getHomeLink();
         System.out.println("linkText: " + homeLink.getText());
         homeLink.click();
         waitTilDataLoad(3);
 
-        choseAsusMonitor();
+        long asusMonitorPrice = choseAsusMonitor();
 
         verifyAppleAndAsusMonitorsPresentAtCart();
+        System.out.println("Bonus - verify total price: " +
+                "total price - ["+demoblazeCartObject.getTotalPrice().getText()+"], " +
+                "calculated total price - ["+(appleMonitorPrice+asusMonitorPrice)+"]");
+
+        assertEquals((appleMonitorPrice+asusMonitorPrice)+"",demoblazeCartObject.getTotalPrice().getText());
 
         ArrayList<HashMap<String, String>> cartSiteDataMapArray = demoblazeCartObject.getDataMap();
         int ind = demoblazeCartObject.getRandomNumberUsingNextInt(0, cartSiteDataMapArray.size());
@@ -245,11 +271,12 @@ public class DemoblazeSiteTesting {
     }
 
     @Step ("Chose Apple Monitor")
-    public void choseAppleMonitor (){
+    public long choseAppleMonitor (){
         demoblazeObject.clickOnMonitors();
 
         waitTilDataLoad(3);
 
+        long price = getSelectedProductPrice(demoblazeObject.getAppleMonitorSelectLink());
         demoblazeObject.clickOnAppleMonitorSelectLink();
 
         waitTilDataLoad(5);
@@ -265,12 +292,16 @@ public class DemoblazeSiteTesting {
         alert.accept();
 
         waitTilDataLoad(3);
+
+        return price;
     }
 
     @Step ("Chose Asus Monitor")
-    public void choseAsusMonitor (){
+    public long choseAsusMonitor (){
         demoblazeObject.clickOnMonitors();
         waitTilDataLoad(3);
+
+        long price = getSelectedProductPrice(demoblazeObject.getAsusMonitorSelectLink());
         demoblazeObject.clickOnAsusMonitorSelectLink();
 
         waitTilDataLoad(5);
@@ -287,6 +318,8 @@ public class DemoblazeSiteTesting {
         alert.accept();
 
         waitTilDataLoad(3);
+
+        return price;
     }
 
     @Step ("Verify Apple & Asus Monitors Present At Cart")
@@ -301,6 +334,24 @@ public class DemoblazeSiteTesting {
 
         assertTrue(asusMonitor.isDisplayed() && appleMonitor.isDisplayed());
 
+    }
+
+    private long getSelectedProductPrice(WebElement productElement){
+        WebElement productElementPapa = productElement.findElement(By.xpath("./.."));
+        System.out.println("productElement Papa: "+productElementPapa.getAttribute("outerHTML"));
+        WebElement nextToPapaProductElement = productElementPapa.findElement(By.xpath("following-sibling::*"));
+        System.out.println("nextToPapaAsus: "+nextToPapaProductElement.getAttribute("outerHTML"));
+        if(nextToPapaProductElement.getText()!=null && !nextToPapaProductElement.getText().equals("")) {
+            System.out.println("price: " + (nextToPapaProductElement.getText()).replace("$", ""));
+            try {
+                Long price = Long.parseLong((nextToPapaProductElement.getText()).replace("$", ""));
+                if(price!=null){
+                    return price;
+                }
+            }catch (Exception ignored){}
+        }
+
+        return 0;
     }
 
     private void waitTilDataLoad(int seconds){

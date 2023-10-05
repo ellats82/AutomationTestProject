@@ -9,10 +9,10 @@ import org.openqa.selenium.support.ui.Select;
 
 public class Demoblaze {
 
-    @FindBy(xpath = "//*[@id='contcont']")
+    @FindBy(id="contcont")
     private WebElement contcont;
 
-    @FindBy(xpath = "//*[@id='tbodyid']")
+    @FindBy(id="tbodyid")
     private WebElement tbodyid;
 
     @FindBy(xpath = "//*[@id='navbarExample']/ul/li[1]/a")
@@ -24,7 +24,7 @@ public class Demoblaze {
     @FindBy(xpath = "//*[@id='navbarExample']/ul/li[2]/a")
     private WebElement contactLink;
 
-    @FindBy(xpath = "//*[@id=\"exampleModalLabel\"]")
+    @FindBy(id="exampleModalLabel")
     private WebElement contactModalTitle;
 
     @FindBy(xpath = "//*[@id=\"exampleModal\"]/div/div/div[3]/button[1]")
@@ -33,13 +33,13 @@ public class Demoblaze {
     @FindBy(xpath = "//*[@id='navbarExample']/ul/li[3]/a")
     private WebElement aboutUstLink;
 
-    @FindBy(xpath = "//*[@id='videoModalLabel']")
+    @FindBy(id="videoModalLabel")
     private WebElement aboutModalTitle;
 
     @FindBy(xpath = "//*[@id=\"videoModal\"]/div/div/div[3]/button")
     private WebElement aboutUsCloseButton;
 
-    @FindBy(xpath = "//*[@id=\"cartur\"]")
+    @FindBy(id="cartur")
     private WebElement cartLink;
 
     @FindBy(xpath = "//*[@id=\"page-wrapper\"]/div/div[1]/h2")
@@ -115,7 +115,7 @@ public class Demoblaze {
                 }
             }catch (Exception e){
                 System.out.println("Exception at checkIfProductArrExist, " +
-                                   "while trying to find productNames[i] Exception=>"+e.getMessage());
+                                   "while trying to find " + productNames[i] + " Exception=>"+e.getMessage());
                 isFound = false;
                 break;
             }
@@ -205,8 +205,16 @@ public class Demoblaze {
         System.out.println("contact Submit Button click");
     }
 
+    public WebElement getAppleMonitorSelectLink() {
+        return appleMonitorSelectLink;
+    }
+
     public void clickOnAppleMonitorSelectLink() {
         this.appleMonitorSelectLink.click();
+    }
+
+    public WebElement getAsusMonitorSelectLink() {
+        return asusMonitorSelectLink;
     }
 
     public void clickOnAsusMonitorSelectLink() {
